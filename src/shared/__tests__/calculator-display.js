@@ -1,20 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {render} from '@testing-library/react'
-import {ThemeProvider} from 'emotion-theming'
-import {dark} from 'themes'
+import {render} from 'calculator-test-utils'
 import CalculatorDisplay from '../calculator-display'
-
-function Wrapper({children}) {
-  return <ThemeProvider theme={dark}>{children}</ThemeProvider>
-}
-Wrapper.propTypes = {
-  children: PropTypes.node,
-}
+import {light} from '../../themes'
 
 test('renders', () => {
   const {container} = render(<CalculatorDisplay value="0" />, {
-    wrapper: Wrapper,
+    theme: light,
   })
 
   // run `npm t -- -u` to update snapshot
@@ -26,8 +17,8 @@ test('renders', () => {
       -webkit-flex: 1;
       -ms-flex: 1;
       flex: 1;
-      color: white;
-      background: #1c191c;
+      color: #1c191c;
+      background: white;
     }
 
     <div
