@@ -34,3 +34,14 @@ Cypress.Commands.add('createUser', overrides => {
     body: user,
   }).then(response => ({...response.body.user, user}))
 })
+
+Cypress.Commands.add('assertHome', () => {
+  cy.url().should('eq', `${Cypress.config().baseUrl}/`)
+})
+
+Cypress.Commands.add('assertLoggedInAs', ({username}) => {
+  cy.window()
+    .its('localStorage.token')
+    .should('be.a', 'string')
+  cy.findByTestId('username-display').should('have.text', username)
+})
