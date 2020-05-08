@@ -36,12 +36,22 @@ Cypress.Commands.add('createUser', overrides => {
 })
 
 Cypress.Commands.add('login', user => {
-  cy.request({
-    url: 'http://localhost:3000/login',
-    method: 'POST',
-    body: user,
-  }).then(response => {
-    window.localStorage.setItem('token', response.body.user.token)
+  return cy
+    .request({
+      url: 'http://localhost:3000/login',
+      method: 'POST',
+      body: user,
+    })
+    .then(response => {
+      window.localStorage.setItem('token', response.body.user.token)
+
+      return {...response.body.user, ...user}
+    })
+})
+
+Cypress.Commands.add('loginAsNewUser', () => {
+  return cy.createUser().then(user => {
+    cy.login(user)
   })
 })
 
